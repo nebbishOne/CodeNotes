@@ -1,0 +1,46 @@
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+section {
+  padding: 8rem 0 7rem;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  background-color: darkgray;
+  color: aliceblue;
+}
+
+button, input {
+  float: left;
+}
+
+.button-primary {
+  float: right;
+}
+
+label {
+  float: left;
+}
+
+textarea {
+  height: auto;
+  width: 100%;
+  min-height: 40vh;
+}
+
+.container {
+  max-width: 1100px;
+}
+
+.codelist {
+  background-color: aliceblue;
+}
+
+.column .columns {
+  background-color: white;
+}
+
+#search {
+  width: 100%;
+}
