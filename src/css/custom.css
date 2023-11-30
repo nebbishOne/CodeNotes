@@ -19,6 +19,10 @@ button, input {
   float: right;
 }
 
+#cancel {
+  float:right;
+}
+
 label {
   float: left;
 }
