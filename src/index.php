@@ -27,7 +27,7 @@
 
 <body>
   <header>
-    <h1><?php echo "Codenotes"; ?></h1>
+    <h1>Codenotes</h1>
   </header>
   <section class="container">
     <div class="row">
@@ -101,10 +101,10 @@
                         <button>Add a file</button>
                     </div>
                     <div class="six columns">
-                        <button class="button-primary">Save</button>
+                        <button name="savebutton" id="save" class="button-primary" disabled="true">Save</button>
                     </div>
                     <div class="two columns">
-                        <button id="cancel">Cancel</button>
+                        <button name="cancelbutton" id="cancel">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -112,9 +112,7 @@
     </div>  
   </section>
   <div id="footer">
-    <?php 
-        echo "version " . "1.0";     // TODO get from the DB
-    ?>
+    Version 0.01
   </div>
   <script src="./js/script.js"></script>
 </body>
