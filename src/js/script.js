@@ -1,8 +1,8 @@
 
-const handleSearch = (text => {
+handleSearch = function(text) {
     return null
-});
-
+}
+       
 /*
 const onLoad = (() => {
     const codefield = Window.getElementByName("code");

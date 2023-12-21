@@ -1,4 +1,28 @@
-<!DOCTYPE html>
+<?php 
+// ===================================================================================
+// Codenotes -  A place to store code or any other text so you can use it later.
+// Copyright ©️ 2023 nebbishOne
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed WITHOUT ANY WARRANTY; 
+// without even the implied warranty of MERCHANTABILITY or FITNESS FOR 
+// A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// ===================================================================================
+
+require './php/formFunctions.php';
+require './php/fileFunctions.php';
+
+    define("VERSION", "0.01-alpha");
+
+    // TODO remove after development
+    ini_set('display_errors', 'On');
+    error_reporting(E_ALL);    
+
+?><!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
@@ -33,86 +57,97 @@
     <div class="row">
         <div class="four columns codelist">
             <h4>My codenotes</h4>
-            <input id="search" type="text" placeholder="Enter a note or language name" onsubmit="handleSearch()">
+            <input id="search" type="text" placeholder="Filter the list..." onsubmit="handleSearch()">
             <br /><br /><br />
             <ul>
-                <li>First</li>
-                <li>First</li>
-                <li>First</li>
-                <li>First</li>
+                <?php
+                    $files = getListOfFiles();
+                    if ($files && sizeof($files) <> 0) {
+                        foreach ($files as $file) {
+                            $filename = $file['filename'] . "(" . $file['language'] . ")";
+                            $filepath = $file['fullpath'];
+                            echo "<li>$filename</li>";
+                        }
+                    } else {
+                        echo "<li>No files saved yet</li>";
+                    }
+                ?>
             </ul>
         </div>
         <div class="eight columns">
-            
-            <div class="anote">
-                <div class="row">
-                    <div class="eight columns">
-                        <label for="name">Name*</label>
+            <form method="POST">
+                <div class="anote">
+                    <div class="row">
+                        <div class="eight columns">
+                            <label for="name">Name*</label>
+                        </div>
+                        <div class="four columns">
+                            <label for="date">Date</label>
+                        </div>
                     </div>
-                    <div class="four columns">
-                        <label for="date">Date</label>
+                    <div class="row">    
+                        <div class="eight columns">
+                            <input type="text" id="name" name="name" required maxlength="30" size="30">
+                        </div>
+                        <div class="four columns">
+                            <input type="date" name="date">
+                        </div>
                     </div>
-                </div>
-                <div class="row">    
-                    <div class="eight columns">
-                        <input type="text" name="name" required maxlength="30" size="30">
+                    <div class="row">
+                        <div class="eight columns">
+                            <label for="tags">Tags*</label>
+                        </div>
+                        <div class="four columns">
+                            <label for="tags">Language</label>
+                        </div>
                     </div>
-                    <div class="four columns">
-                        <input type="date" name="date">
+                    <div class="row">
+                        <div class="eight columns">                        
+                            <input type="text" id="tags" name="tags" required name="tags" size="30">
+                        </div>
+                        <div class="four columns">
+                            <select name="language">
+                                <option value="" selected>Please choose one...</option>
+                                <option value="CSS">CSS</option>
+                                <option value="HTML">HTML</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="PHP">PHP</option>
+                                <option value="TypeScript">Typescript</option>
+                                <option value="xml">XML</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="eight columns">
-                        <label for="tags">Tags*</label>
+                    <div class="row">
+                        <div class="twelve columns">
+                            <label for="code">Code*</label>
+                        </div>
                     </div>
-                    <div class="four columns">
-                        <label for="tags">Language</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="eight columns">                        
-                        <input type="text" name="tags" required name="tags" size="30">
-                    </div>
-                    <div class="four columns">
-                        <select name="language">
-                            <option value="">...Please choose an option</option>
-                            <option value="css">CSS</option>
-                            <option value="html">HTML</option>
-                            <option value="javascript" selected>Javascript</option>
-                            <option value="typescript">Typescript</option>
-                            <option value="xml">XML</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="twelve columns">
-                        <label for="code">Code*</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="twelve columns">
-                        <textarea required name="code" placeholder="Code goes here..."></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="buttonsrow">
-                <div class="row">
-                    <div class="four columns">
-                        <button>Add a file</button>
-                    </div>
-                    <div class="six columns">
-                        <button name="savebutton" id="save" class="button-primary" disabled="true">Save</button>
-                    </div>
-                    <div class="two columns">
-                        <button name="cancelbutton" id="cancel">Cancel</button>
+                    <div class="row">
+                        <div class="twelve columns">
+                            <textarea required id="code" name="code" placeholder="Code goes here..." spellcheck="false"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="buttonsrow">
+                    <div class="row">
+                        <div class="four columns">
+                            <button>Add a file</button>
+                        </div>
+                        <div class="six columns">
+                            <button name="savebutton" id="save" class="button-primary">Save</button>
+                        </div>
+                        <div class="two columns">
+                            <button name="cancelbutton" id="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>  
   </section>
   <div id="footer">
-    Version 0.01
+    Version <?php echo VERSION; ?>
+    <br /><br />
   </div>
   <script src="./js/script.js"></script>
 </body>
