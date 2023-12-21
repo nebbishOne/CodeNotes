@@ -23,16 +23,13 @@
                     ]
                 );
             }
+            $files = array_column($fileList, "filename");
+            array_multisort($files, SORT_ASC, $fileList);
             return $fileList;
         } 
         catch(Exception $err) {
             print_r($err);
         }
-        return null;
-    }
-
-    function saveFile($filename, $language, $tags, $date) {
-
         return null;
     }
 ?>

@@ -10,6 +10,10 @@
         $nme = $_POST['name'];
         $tags = $_POST['tags'];
         $language = $_POST['language'];
+        if (!isset($nme) || !isset($tags) || !isset($language)) {
+            echo "Missing information. Please complete required fields and save again.";
+            return;
+        }
         $code = $_POST['code'];
         if (isset($code)) {
             $filename = $nme . "." . $language;
@@ -17,7 +21,7 @@
             fwrite($f, $code);
             fclose($f);
             chmod(FILEPATH . $filename, 0777);
-            echo "File was processed!!!";
+            touch(FILEPATH . $filename);
         } else {
             echo "NoCode";
         }

@@ -55,18 +55,18 @@ require './php/fileFunctions.php';
   </header>
   <section class="container">
     <div class="row">
-        <div class="four columns codelist">
+        <div class="four columns">
             <h4>My codenotes</h4>
             <input id="search" type="text" placeholder="Filter the list..." onsubmit="handleSearch()">
             <br /><br /><br />
-            <ul>
+            <ul class="codelist">
                 <?php
                     $files = getListOfFiles();
                     if ($files && sizeof($files) <> 0) {
                         foreach ($files as $file) {
-                            $filename = $file['filename'] . "(" . $file['language'] . ")";
+                            $filename = $file['filename'] . " (" . $file['language'] . ")";
                             $filepath = $file['fullpath'];
-                            echo "<li>$filename</li>";
+                            echo "<li><a href=\"./\">$filename</a></li>";
                         }
                     } else {
                         echo "<li>No files saved yet</li>";
@@ -78,19 +78,13 @@ require './php/fileFunctions.php';
             <form method="POST">
                 <div class="anote">
                     <div class="row">
-                        <div class="eight columns">
+                        <div class="twelve columns">
                             <label for="name">Name*</label>
-                        </div>
-                        <div class="four columns">
-                            <label for="date">Date</label>
                         </div>
                     </div>
                     <div class="row">    
-                        <div class="eight columns">
-                            <input type="text" id="name" name="name" required maxlength="30" size="30">
-                        </div>
-                        <div class="four columns">
-                            <input type="date" name="date">
+                        <div class="twelve columns">
+                            <input type="text" id="name" name="name" required maxlength="60" size="48">
                         </div>
                     </div>
                     <div class="row">
@@ -98,7 +92,7 @@ require './php/fileFunctions.php';
                             <label for="tags">Tags*</label>
                         </div>
                         <div class="four columns">
-                            <label for="tags">Language</label>
+                            <label for="language">Language</label>
                         </div>
                     </div>
                     <div class="row">
@@ -107,13 +101,21 @@ require './php/fileFunctions.php';
                         </div>
                         <div class="four columns">
                             <select name="language">
-                                <option value="" selected>Please choose one...</option>
+                                <option value="" selected>Select one...</option>
+                                <option value="C">C</option>
+                                <option value="C++">C++</option>
+                                <option value="C#">C#</option>
                                 <option value="CSS">CSS</option>
+                                <option value="CSV">CSV</option>
                                 <option value="HTML">HTML</option>
+                                <option value="Java">Java</option>
                                 <option value="JavaScript">JavaScript</option>
                                 <option value="PHP">PHP</option>
-                                <option value="TypeScript">Typescript</option>
-                                <option value="xml">XML</option>
+                                <option value="Python">Python</option>
+                                <option value="Shell">Shell</option>
+                                <option value="Text">Text</option>
+                                <option value="TypeScript">TypeScript</option>
+                                <option value="XML">XML</option>
                             </select>
                         </div>
                     </div>
