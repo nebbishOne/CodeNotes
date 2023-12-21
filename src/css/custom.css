@@ -19,6 +19,11 @@ button, input {
   float: right;
 }
 
+.button-codenote {
+  float: left;
+  border: none;
+}
+
 #cancel {
   float:right;
 }

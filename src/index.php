@@ -17,10 +17,11 @@ require './php/formFunctions.php';
 require './php/fileFunctions.php';
 
     define("VERSION", "0.01-alpha");
+    defined("FILEPATH") or define("FILEPATH", "./files");
 
     // TODO remove after development
     ini_set('display_errors', 'On');
-    error_reporting(E_ALL);    
+    error_reporting(E_ALL);
 
 ?><!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -60,18 +61,21 @@ require './php/fileFunctions.php';
             <input id="search" type="text" placeholder="Filter the list..." onsubmit="handleSearch()">
             <br /><br /><br />
             <ul class="codelist">
+                <form method="POST">
                 <?php
                     $files = getListOfFiles();
                     if ($files && sizeof($files) <> 0) {
                         foreach ($files as $file) {
                             $filename = $file['filename'] . " (" . $file['language'] . ")";
-                            $filepath = $file['fullpath'];
-                            echo "<li><a href=\"./\">$filename</a></li>";
+                            # $fullpath = str_replace("___", "\ ", $file['fullpath']);
+                            $fullpath = $file['fullpath'];
+                            echo '<li><button name="' . $fullpath . '" class="button-codenote">' . $filename . '</button></li><br />';
                         }
                     } else {
                         echo "<li>No files saved yet</li>";
                     }
                 ?>
+                </form>
             </ul>
         </div>
         <div class="eight columns">
@@ -84,7 +88,14 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="row">    
                         <div class="twelve columns">
-                            <input type="text" id="name" name="name" required maxlength="60" size="48">
+                            <input type="text" id="name" name="name" required maxlength="60" size="48"  
+                                <?php 
+                                    if(isset($filename) && isset($language)) { echo "value=\"" . $filename . "\""; 
+                                    } else {
+                                        echo "value=\"\"";
+                                    }                                
+                                ?> 
+                            >
                         </div>
                     </div>
                     <div class="row">
@@ -97,25 +108,33 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="row">
                         <div class="eight columns">                        
-                            <input type="text" id="tags" name="tags" required name="tags" size="30">
+                            <input type="text" id="tags" name="tags" required name="tags" size="30"
+                                <?php 
+                                    if(isset($tags)) { echo "value=\"" . $tags . "\""; 
+                                    } else {
+                                        echo "value=\"\"";
+                                    }
+                                ?>
+                            >
                         </div>
                         <div class="four columns">
                             <select name="language">
-                                <option value="" selected>Select one...</option>
-                                <option value="C">C</option>
-                                <option value="C++">C++</option>
-                                <option value="C#">C#</option>
-                                <option value="CSS">CSS</option>
-                                <option value="CSV">CSV</option>
-                                <option value="HTML">HTML</option>
-                                <option value="Java">Java</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="PHP">PHP</option>
-                                <option value="Python">Python</option>
-                                <option value="Shell">Shell</option>
-                                <option value="Text">Text</option>
-                                <option value="TypeScript">TypeScript</option>
-                                <option value="XML">XML</option>
+                                <?php $lang = ""; if (isset($language)) { $lang = $language; } ?>
+                                <option value="" <?php if ($lang == "") { echo "selected"; } ?>>Select one...</option>
+                                <option value="C" <?php if ($lang == "C") { echo "selected"; } ?>>C</option>
+                                <option value="C++" <?php if ($lang == "C++") { echo "selected"; } ?>>C++</option>
+                                <option value="C#" <?php if ($lang == "C#") { echo "selected"; } ?>>C#</option>
+                                <option value="CSS" <?php if ($lang == "CSS") { echo "selected"; } ?>>CSS</option>
+                                <option value="CSV" <?php if ($lang == "CSV") { echo "selected"; } ?>>CSV</option>
+                                <option value="HTML" <?php if ($lang == "HTML") { echo "selected"; } ?>>HTML</option>
+                                <option value="Java" <?php if ($lang == "Java") { echo "selected"; } ?>>Java</option>
+                                <option value="JavaScript" <?php if ($lang == "JavaScript") { echo "selected"; } ?>>JavaScript</option>
+                                <option value="PHP" <?php if ($lang == "PHP") { echo "selected"; } ?>>PHP</option>
+                                <option value="Python" <?php if ($lang == "Python") { echo "selected"; } ?>>Python</option>
+                                <option value="Shell" <?php if ($lang == "Shell") { echo "selected"; } ?>>Shell</option>
+                                <option value="Text" <?php if ($lang == "Text") { echo "selected"; } ?>>Text</option>
+                                <option value="TypeScript" <?php if ($lang == "TypeScript") { echo "selected"; } ?>>TypeScript</option>
+                                <option value="XML" <?php if ($lang == "XML") { echo "selected"; } ?>>XML</option>
                             </select>
                         </div>
                     </div>
@@ -126,7 +145,15 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="row">
                         <div class="twelve columns">
-                            <textarea required id="code" name="code" placeholder="Code goes here..." spellcheck="false"></textarea>
+                            <textarea required id="code" name="code" placeholder="
+                                <?php 
+                                    if (isset($code)) { 
+                                        echo ""; 
+                                    } else {
+                                        echo "Code goes here..."; 
+                                    }
+                                ?>" spellcheck="false"><?php if (isset($code)) { echo trim($code); } else { echo ""; } ?>
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -139,7 +166,7 @@ require './php/fileFunctions.php';
                             <button name="savebutton" id="save" class="button-primary">Save</button>
                         </div>
                         <div class="two columns">
-                            <button name="cancelbutton" id="cancel">Cancel</button>
+                            <button name="deletebutton" id="delete">Delete</button>
                         </div>
                     </div>
                 </div>

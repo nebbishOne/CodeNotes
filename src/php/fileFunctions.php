@@ -1,9 +1,6 @@
 <?php
     function getListOfFiles() {
         try {
-            if (FILEPATH === null) {
-                define("FILEPATH", "./files");
-            }
             $fileList = [];
             foreach (new DirectoryIterator(FILEPATH) as $file) {
                 if ($file->isDot()) continue;
@@ -15,11 +12,12 @@
                     $language = substr($filename, $pos +1);
                     $filename = substr($filename, 0, $pos);                    
                 }
+                $fullpath = FILEPATH . "/" . str_replace(" ", "___", $filename) . "." . $language;
                 array_push($fileList, 
                     [
                         "filename" => $filename,
                         "language" => $language,
-                        "fullpath" => FILEPATH . "/" . $filename
+                        "fullpath" => $fullpath
                     ]
                 );
             }
