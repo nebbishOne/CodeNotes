@@ -15,11 +15,13 @@ button, input {
   float: left;
 }
 
-.button-primary {
-  float: right;
+.button-delete {
+  background-color: indianred;
+  color: lightpink;
 }
 
 .button-codenote {
+  width: 100%;
   float: left;
   border: none;
 }
@@ -44,6 +46,8 @@ textarea {
   height: auto;
   width: 100%;
   min-height: 40vh;
+  font-family: monospace, monospace;
+  font-size: .7em;
 }
 
 .container {

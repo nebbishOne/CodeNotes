@@ -66,10 +66,9 @@ require './php/fileFunctions.php';
                     $files = getListOfFiles();
                     if ($files && sizeof($files) <> 0) {
                         foreach ($files as $file) {
-                            $filename = $file['filename'] . " (" . $file['language'] . ")";
-                            # $fullpath = str_replace("___", "\ ", $file['fullpath']);
-                            $fullpath = $file['fullpath'];
-                            echo '<li><button name="' . $fullpath . '" class="button-codenote">' . $filename . '</button></li><br />';
+                            $filenm = $file['filename'] . " (" . $file['language'] . ")";
+                            $fullpath = str_replace(".", "^^^", $file['fullpath']);
+                            echo '<li><button name="' . $fullpath . '" class="button-codenote">' . $filenm . '</button></li><br />';
                         }
                     } else {
                         echo "<li>No files saved yet</li>";
@@ -79,7 +78,7 @@ require './php/fileFunctions.php';
             </ul>
         </div>
         <div class="eight columns">
-            <form method="POST">
+            <form method="POST" onsubmit="return validateMyForm();>
                 <div class="anote">
                     <div class="row">
                         <div class="twelve columns">
@@ -90,10 +89,10 @@ require './php/fileFunctions.php';
                         <div class="twelve columns">
                             <input type="text" id="name" name="name" required maxlength="60" size="48"  
                                 <?php 
-                                    if(isset($filename) && isset($language)) { echo "value=\"" . $filename . "\""; 
+                                    if(isset($filename) && isset($language)) { echo "value=\"" . $filename . "\"";
                                     } else {
                                         echo "value=\"\"";
-                                    }                                
+                                    }
                                 ?> 
                             >
                         </div>
@@ -152,21 +151,23 @@ require './php/fileFunctions.php';
                                     } else {
                                         echo "Code goes here..."; 
                                     }
-                                ?>" spellcheck="false"><?php if (isset($code)) { echo trim($code); } else { echo ""; } ?>
-                            </textarea>
+                                ?>" spellcheck="false"><?php if (isset($code)) { echo trim($code); } else { echo ""; } ?></textarea>
                         </div>
                     </div>
-                </div>
-                <div class="buttonsrow">
-                    <div class="row">
-                        <div class="four columns">
-                            <button>Add a file</button>
-                        </div>
-                        <div class="six columns">
-                            <button name="savebutton" id="save" class="button-primary">Save</button>
-                        </div>
-                        <div class="two columns">
-                            <button name="deletebutton" id="delete">Delete</button>
+                    <div class="buttonsrow">
+                        <div class="row">
+                            <div class="three columns">
+                                <button>File...</button>
+                            </div>
+                            <div class="three columns">
+                                <button name="resetbutton" id="reset" >Reset</button>
+                            </div>
+                            <div class="three columns">
+                                <button name="savebutton" id="save" class="button-primary">Save</button>
+                            </div>
+                            <div class="three columns">
+                                <button name="deletebutton" id="delete" class="button-delete">Delete</button>
+                            </div>
                         </div>
                     </div>
                 </div>

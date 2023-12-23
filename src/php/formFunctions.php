@@ -17,31 +17,56 @@
                 echo "Missing information. Please complete required fields and save again.";
                 return;
             }
+
+            if (isset($_POST['deletebutton'])) { 
+                $filenme = "/" . $nme . "." . $language;
+                if (file_exists(FILEPATH . $filenme)) {
+                    try {
+                        unlink(FILEPATH . $filenme);
+                    }
+                    catch(Exception $err) {
+                       //
+                    }
+                }                
+                unset($name, $tags, $filename, $code, $language); // clear the form
+                return;
+            }
+
+            if (isset($_POST['resetbutton'])) { 
+                unset($name, $tags, $filenme, $filenm, $filename, $code, $language); // clear the form
+                return;
+            }
+
+            // else process SAVE button
             $code = $_POST['code'];
-            $filename = "/" . $nme . "." . $language;
-            $f = fopen(FILEPATH . $filename, "w+") or die("fopen failed");
+            $filename = $nme;
+            $filenme = "/" . $nme . "." . $language;
+            $f = fopen(FILEPATH . $filenme, "w+") or die("fopen failed");
             fwrite($f, trim($code));
             fwrite($f, "TAGSTAGSTAGS" . $tags);
             fclose($f);
-            chmod(FILEPATH . $filename, 0777);
-            touch(FILEPATH . $filename);
+            chmod(FILEPATH . $filenme, 0777);
+            touch(FILEPATH . $filenme);
+
         } else {
             foreach ($_POST as $key => $value) {
-                # echo "The Field name " . htmlspecialchars($key) . " is " . htmlspecialchars($value) . "<br />";
+                # echo "The Field name " . $key . " is " . $value . "<br />";
                 $filename = "";
                 $language = "";
                 $code = "";
                 $fullpath = str_replace("___", " ", $key);
-                $fullpath = str_replace("_", ".", $fullpath);
+                $fullpath = str_replace("^^^", ".", $fullpath);
+                # $fullpath = str_replace("_", ".", $fullpath);
                 $slashpos = strrpos($fullpath, "/");
                 if ($slashpos && $slashpos > 0) {
-                    $filename = substr($fullpath, $slashpos);
+                    $filename = substr($fullpath, $slashpos + 1);
                 }
                 $dotpos = strrpos($filename, ".");
                 if ($dotpos && $dotpos > 0) {
                     $language = substr($filename, $dotpos +1);
                 }
                 $filename = substr($filename, 0, $dotpos);
+                # echo "Filename is " . $filename;
                 try {
                     $f = fopen($fullpath, "r") or die("fopen failed");
                     $code = fread($f, filesize($fullpath));
