@@ -6,7 +6,7 @@ Definitely not ready for any sort of production use. Use at your own risk.
 
 It's built on:
 
-* Web pages, CSS and a tiny bit of Javascript.
+* Web pages, CSS (no Javascript).
 * PHP for some page automation, file saving / reading / deleteing.
 * Apache 2 web server, running locally on my dev PC only.
 
