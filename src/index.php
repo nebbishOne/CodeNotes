@@ -52,23 +52,29 @@ require './php/fileFunctions.php';
 
 <body>
   <header>
-    <h1>Codenotes</h1>
+    <h1><a id="headerh1" href="./index.php">Codenotes</a></h1>
   </header>
   <section class="container">
     <div class="row">
         <div class="four columns">
             <h4>My codenotes</h4>
-            <input id="search" type="text" placeholder="Filter the list..." onsubmit="handleSearch()">
+            <form method="POST">
+                <input id="search" name="search" type="text" placeholder="Filter the list...">
+            </form>
             <br /><br /><br />
             <ul class="codelist">
                 <form method="POST">
                 <?php
                     $files = getListOfFiles();
                     if ($files && sizeof($files) <> 0) {
-                        foreach ($files as $file) {
-                            $filenm = $file['filename'] . " (" . $file['language'] . ")";
-                            $fullpath = str_replace(".", "^^^", $file['fullpath']);
-                            echo '<li><button name="' . $fullpath . '" class="button-codenote">' . $filenm . '</button></li><br />';
+                        foreach ($files as $a_file) {
+                            $filenm = $a_file['filename'] . " (" . $a_file['language'] . ")";
+                            $fullpath = str_replace(".", "^^^", $a_file['fullpath']);
+                            if (isset($searchString) && (!str_contains(strtoupper($fullpath), strtoupper($searchString)))) {
+                                echo '<li><button name="' . $fullpath . '" class="button-codenote hide">' . $filenm . '</button></li>';
+                            } else {
+                                echo '<li><button name="' . $fullpath . '" class="button-codenote">' . $filenm . '</button></li>';
+                            }
                         }
                     } else {
                         echo "<li>No files saved yet</li>";
@@ -78,7 +84,7 @@ require './php/fileFunctions.php';
             </ul>
         </div>
         <div class="eight columns">
-            <form method="POST" onsubmit="return validateMyForm();>
+            <form method="POST" enctype="multipart/form-data">
                 <div class="anote">
                     <div class="row">
                         <div class="twelve columns">
@@ -139,12 +145,22 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="row">
                         <div class="twelve columns">
-                            <label for="code">Code*</label>
+                            <label for="selectedfile">File</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="twelve columns">
-                            <textarea required id="code" name="code" placeholder="
+                            <input type="file" id="selectedfile" name="selectedfile" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns">
+                            <label for="code">Code</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns">
+                            <textarea id="code" name="code" ondblclick="this.select();" placeholder="
                                 <?php 
                                     if (isset($code)) { 
                                         echo ""; 
@@ -156,16 +172,13 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="buttonsrow">
                         <div class="row">
-                            <div class="three columns">
-                                <button>File...</button>
-                            </div>
-                            <div class="three columns">
-                                <button name="resetbutton" id="reset" >Reset</button>
-                            </div>
-                            <div class="three columns">
+                            <div class="four columns">
                                 <button name="savebutton" id="save" class="button-primary">Save</button>
                             </div>
-                            <div class="three columns">
+                            <div class="four columns">
+                                <button name="resetbutton" id="reset" >Reset</button>
+                            </div>
+                            <div class="four columns">
                                 <button name="deletebutton" id="delete" class="button-delete">Delete</button>
                             </div>
                         </div>

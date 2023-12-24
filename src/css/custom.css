@@ -11,6 +11,12 @@ h1 {
   color: aliceblue;
 }
 
+#headerh1 {
+  text-decoration: none;  
+  background-color: darkgray;
+  color: aliceblue;  
+}
+
 button, input {
   float: left;
 }
@@ -70,4 +76,8 @@ textarea {
 
 #footer {
   background-color: darkgray;
+}
+
+.hide{
+  display:none;  
 }
