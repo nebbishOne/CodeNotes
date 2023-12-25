@@ -1,24 +1,50 @@
+@font-face {
+  font-family: "Alegreya";
+  src:
+    url("alegreya-bold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alegreya-Sans";
+  src:
+    url("alegreyasans-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+body {
+  font-family: "Alegreya-Sans",sans-serif;
+}
 section {
   padding: 8rem 0 7rem;
-  text-align: center;
+  text-align: left;
 }
 
 h1 {
+  background-color: #87bdd8;
   text-align: center;
-  background-color: darkgray;
-  color: aliceblue;
+  font-size: 44px;
 }
 
 #headerh1 {
-  text-decoration: none;  
-  background-color: darkgray;
-  color: aliceblue;  
+  padding: 0px;
+  margin: 0px;
+  text-decoration: none;
+  
+  color: rgb(22, 76, 122);  
+  font-family: "Alegreya",serif;
+  font-size: 44px;
 }
 
 button, input {
   float: left;
+  text-align: left;
+}
+
+.button-file {
+  font-family: "Alegreya-Sans", sans-serif;
 }
 
 .button-delete {
@@ -61,9 +87,10 @@ textarea {
 }
 
 .codelist {
-  background-color: aliceblue;
+  background-color: #e4ecf0;
   max-height: 500px;
   overflow-y: scroll;
+  text-align: left;
 }
 
 .column .columns {
@@ -75,7 +102,8 @@ textarea {
 }
 
 #footer {
-  background-color: darkgray;
+  background-color: #eaf3d6;
+  text-align: center;
 }
 
 .hide{

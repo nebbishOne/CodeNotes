@@ -16,7 +16,7 @@
 require './php/formFunctions.php';
 require './php/fileFunctions.php';
 
-    define("VERSION", "0.01-alpha");
+    define("VERSION", "1.0");
     defined("FILEPATH") or define("FILEPATH", "./files");
 
     // TODO remove after development
@@ -57,7 +57,7 @@ require './php/fileFunctions.php';
   <section class="container">
     <div class="row">
         <div class="four columns">
-            <h4>My codenotes</h4>
+            <h4>My Codenotes</h4>
             <form method="POST">
                 <input id="search" name="search" type="text" placeholder="Filter the list...">
             </form>
@@ -150,7 +150,7 @@ require './php/fileFunctions.php';
                     </div>
                     <div class="row">
                         <div class="twelve columns">
-                            <input type="file" id="selectedfile" name="selectedfile" />
+                            <input class="button-file" type="file" id="selectedfile" name="selectedfile" />
                         </div>
                     </div>
                     <div class="row">
@@ -164,9 +164,7 @@ require './php/fileFunctions.php';
                                 <?php 
                                     if (isset($code)) { 
                                         echo ""; 
-                                    } else {
-                                        echo "Code goes here..."; 
-                                    }
+                                    } else {echo "Code goes here...";}
                                 ?>" spellcheck="false"><?php if (isset($code)) { echo trim($code); } else { echo ""; } ?></textarea>
                         </div>
                     </div>
